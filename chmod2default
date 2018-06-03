@@ -1,0 +1,32 @@
+#!/bin/bash  
+  
+# 修改指定文件或目录及其子项到默认权限, 并递归修改子目录及文件的权限
+
+function chmodDefault()  
+{  
+    if [ -d "$1" ]; then  
+        chmod 755 "$1"
+
+        for i in $1/*  
+        do  
+            if [ -f "$i" ]; then  
+                chmod 644 "$i"  
+            elif [ -d "$i" ]; then  
+                chmod 755 "$i"  
+                chmodDefault "$i"  
+            fi  
+        done
+    elif [ -f "$1" ]; then
+        chmod 644 "$1"    
+    fi  
+}  
+  
+if [ "$#" = 0 ]; then  
+    echo "Usage: bash $0 <dir1> <dir2> <file1> ..."  
+else
+    for VAR in "$@" 
+    do
+        chmodDefault $VAR
+    done  
+fi  
+
