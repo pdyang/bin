@@ -2,7 +2,7 @@
   
 # 修改指定文件或目录及其子项到默认权限, 并递归修改子目录及文件的权限
 
-function chmodDefault()  
+function chmod2default()  
 {  
     if [ -d "$1" ]; then  
         chmod 755 "$1"
@@ -26,7 +26,7 @@ if [ "$#" = 0 ]; then
 else
     for VAR in "$@" 
     do
-        chmodDefault $VAR
+        chmod2default $VAR
     done  
 fi  
 
